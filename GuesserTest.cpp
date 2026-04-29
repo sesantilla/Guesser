@@ -14,9 +14,34 @@ class GuesserTest : public ::testing::Test
 		virtual void TearDown(){} //clean up after each test, (before destructor)
 };
 
-// Example "smoke test" (can be deleted)
-TEST(GuesserTest, smoke_test)
+TEST(GuesserTest, DistIsZero)
+{
+	Guesser object("Secret");
+	ASSERT_EQ(object.distance("Secret"), 0);
+}
+
+TEST(GuesserTest, DistCount_DiffChar)
+{
+	Guesser object("Secret");
+	ASSERT_EQ(object.distance("SecRet"), 1);
+}
+
+TEST(GuesserTest, DistCount_ExtChar)
+{
+	Guesser object("Secret");
+	ASSERT_EQ(object.distance("Secrets"), 1);
+}
+
+TEST(GuesserTest, DistCount_MissedChar)
 {
   Guesser object("Secret");
-  ASSERT_EQ( 1+1, 2 );
+  ASSERT_EQ(object.distance("Secre"), 1);
 }
+
+TEST(GuesserTest, DistCap_SLength)
+{
+  Guesser object("Secret");
+  ASSERT_EQ(object.distance("CompletelyDifferent"), 6);
+}
+
+
